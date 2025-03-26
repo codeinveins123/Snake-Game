@@ -1,11 +1,22 @@
-/////////////////////////////////
-////                         ////
-////SNAKE GAME by codeinveins////
-////                         ////
-////         CONTROLS        ////
-//// W or Up = UP            ////
-//// A or Left = left        ////
-//// S or Down = Down        ////
-//// D or Right = Right      ////
-//// Esc or Space = Pause    ////
-/////////////////////////////////
+# 🐍 SNAKE GAME by codeinveins  
+
+---
+
+## 🎮 How It Looks  
+
+![Gameplay](game.gif)  
+
+---
+
+## 🎮 Controls  
+
+| Key | Action |
+|-----|--------|
+| **W** / **⬆ UpArrow** | Move Up |
+| **A** / **⬅ LeftArrow** | Move Left |
+| **S** / **⬇ DownArrow** | Move Down |
+| **D** / **➡ RightArrow** | Move Right |
+| **Esc** / **Space** | Pause |
+| **Enter** | Press menu button |
+
+---
