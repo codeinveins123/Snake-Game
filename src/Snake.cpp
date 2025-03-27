@@ -74,13 +74,24 @@ bool Snake::IsSelfIntersecting() const
     return flag;
 }
 
-void Snake::Grow(const sf::Vector2f& direction)
+void Snake::GrowH(const sf::Vector2f& direction)
 {
     sf::Sprite newPiece;
     newPiece.setTexture(*(m_body.begin()->getTexture()));
     newPiece.setPosition(m_head->getPosition() + direction);
-
     m_head = m_body.insert(++m_head, newPiece);
+}
+
+void Snake::GrowT(const sf::Vector2f& direction)
+{
+    sf::Sprite newPiece;
+    newPiece.setTexture(*(m_body.begin()->getTexture()));
+
+    // Новый сегмент появляется там, где раньше был старый `m_tail`
+    newPiece.setPosition(m_tail->getPosition() - direction);
+
+    // Вставляем перед `m_tail`, чтобы сохранить порядок
+    m_tail = m_body.insert(m_tail, newPiece);
 }
 
 void Snake::draw(sf::RenderTarget& target, sf::RenderStates states) const

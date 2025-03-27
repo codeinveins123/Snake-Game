@@ -20,14 +20,15 @@ class GameOver : public Engine::State
         bool m_isExitButtonSelected;
         bool m_isExitButtonPressed;
         
-        
+        int difficult;
         
     public:
-        GameOver(std::shared_ptr<Context>& context);
+        GameOver(std::shared_ptr<Context>& context, int difficult);
         ~GameOver();
 
         void Init() override;
         void ProcessInput() override;
         void Update(sf::Time deltaTime) override;
         void Draw() override;
+        
 };

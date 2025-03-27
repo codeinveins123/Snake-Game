@@ -83,7 +83,7 @@ void MainMenu::ProcessInput()
                     }
                     break;
                 }
-                case sf::Keyboard::Return:
+                case sf::Keyboard::Return: case sf::Keyboard::Space:
                 {
                     m_context->m_assets->GetSound(SELECT_SOUND).play();
                     m_isPlayButtonPressed = false;
@@ -123,7 +123,8 @@ void MainMenu::Update(sf::Time deltaTime)
 
     if(m_isPlayButtonPressed)
     {
-        m_context->m_states->Add(std::make_unique<GamePlay>(m_context), true);
+        m_context->m_states->Add(std::make_unique<DifficultMenu>(m_context), false);
+        m_isPlayButtonPressed = false;
     }
     else if(m_isExitButtonPressed)
     {

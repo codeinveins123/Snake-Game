@@ -17,6 +17,6 @@
 | **S** / **⬇ DownArrow** | Move Down |
 | **D** / **➡ RightArrow** | Move Right |
 | **Esc** / **Space** | Pause |
-| **Enter** | Press menu button |
+| **Enter** / **Space** | Press menu button |
 
 ---

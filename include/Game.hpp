@@ -16,6 +16,8 @@ enum AssetID
     FOOD,
     FOOD2,
     WALL,
+    SPEEDUP,
+    SPEEDDOWN,
     FOODSOUND,
     WALLSOUND,
     FUNNY_MUSIC,
@@ -43,7 +45,7 @@ class Game
 {
     private:
         std::shared_ptr<Context> m_context;
-        const sf::Time TIME_PER_FRAME = sf::seconds(1.f/144.f);
+        const sf::Time TIME_PER_FRAME = sf::seconds(1.f/60.f);
     public:
         Game();
         ~Game();

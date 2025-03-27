@@ -3,9 +3,10 @@
 
 #include <SFML/Window/Event.hpp>
 
-GameOver::GameOver(std::shared_ptr<Context>& context)
+GameOver::GameOver(std::shared_ptr<Context>& context, int difficult)
     : m_context(context), m_isRetryButtonSelected(true), m_isExitButtonSelected(false),
-    m_isExitButtonPressed(false), m_isRetryButtonPressed(false)
+    m_isExitButtonPressed(false), m_isRetryButtonPressed(false),
+    difficult(difficult)
 {
 
 }
@@ -79,7 +80,7 @@ void GameOver::ProcessInput()
                     m_context->m_assets->GetSound(SELECT_SOUND).play();
                     break;
                 }
-                case sf::Keyboard::Return:
+                case sf::Keyboard::Return: case sf::Keyboard::Space:
                 {
                     m_isRetryButtonPressed = false;
                     m_isExitButtonPressed = false;
@@ -117,11 +118,10 @@ void GameOver::Update(sf::Time deltaTime)
         m_exitButton.setFillColor(sf::Color::Black);
         m_retryButton.setFillColor(sf::Color::Yellow); 
     }
-
     if(m_isRetryButtonPressed)
     {
         m_context->m_assets->GetSound(FUNNY_MUSIC).play();
-        m_context->m_states->Add(std::make_unique<GamePlay>(m_context), true);
+        m_context->m_states->Add(std::make_unique<GamePlay>(m_context, difficult), true);
     }
     else if(m_isExitButtonPressed)
     {
@@ -137,3 +137,4 @@ void GameOver::Draw()
     m_context->m_window->draw(m_exitButton);
     m_context->m_window->display();
 }
+

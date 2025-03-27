@@ -24,7 +24,8 @@ class Snake : public sf::Drawable
         bool IsOn(const sf::Sprite& other) const;
         bool IsOnBody(const sf::Sprite& other) const;
         bool IsSelfIntersecting() const;
-        void Grow(const sf::Vector2f& direction);
+        void GrowH(const sf::Vector2f& direction);
+        void GrowT(const sf::Vector2f& direction);
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
         std::list<sf::Sprite>::iterator getTail() const;
         std::list<sf::Sprite>::iterator getHead() const;
