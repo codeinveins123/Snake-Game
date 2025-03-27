@@ -17,6 +17,8 @@ GameOver::~GameOver()
 
 void GameOver::Init()
 {
+    m_context->m_assets->GetSound(GAMEOVER_SOUND).play();
+
     m_context->m_assets->AddFont(MAIN_FONT, "../assets/fonts/Anton/Anton-Regular.ttf");
     //GameOverTitle
     m_gameOverTitle.setFont(m_context->m_assets->GetFont(MAIN_FONT));
@@ -63,6 +65,7 @@ void GameOver::ProcessInput()
                         m_isRetryButtonSelected = true;
                         m_isExitButtonSelected = false;
                     }
+                    m_context->m_assets->GetSound(SELECT_SOUND).play();
                     break;
                 }
                     
@@ -73,6 +76,7 @@ void GameOver::ProcessInput()
                         m_isRetryButtonSelected = false;
                         m_isExitButtonSelected = true;
                     }
+                    m_context->m_assets->GetSound(SELECT_SOUND).play();
                     break;
                 }
                 case sf::Keyboard::Return:
@@ -88,6 +92,7 @@ void GameOver::ProcessInput()
                     {
                         m_isExitButtonPressed = true;
                     }
+                    m_context->m_assets->GetSound(SELECT_SOUND).play();
                     break;
                 }
                 default:
@@ -110,11 +115,12 @@ void GameOver::Update(sf::Time deltaTime)
     else
     {
         m_exitButton.setFillColor(sf::Color::Black);
-        m_retryButton.setFillColor(sf::Color::Yellow);
+        m_retryButton.setFillColor(sf::Color::Yellow); 
     }
 
     if(m_isRetryButtonPressed)
     {
+        m_context->m_assets->GetSound(FUNNY_MUSIC).play();
         m_context->m_states->Add(std::make_unique<GamePlay>(m_context), true);
     }
     else if(m_isExitButtonPressed)

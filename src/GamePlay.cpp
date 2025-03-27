@@ -4,6 +4,7 @@
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/System.hpp>
 
 #include <stdlib.h>
 #include <vector>
@@ -27,12 +28,17 @@ GamePlay::~GamePlay()
 
 void GamePlay::Init()
 {
+
     m_context->m_assets->AddTexture(GRASS, "../assets/textures/Grass.png", true);
     m_context->m_assets->AddTexture(FOOD, "../assets/textures/Apple.png");
     m_context->m_assets->AddTexture(FOOD2, "../assets/textures/Apple2.png");
     m_context->m_assets->AddTexture(SNAKE_BODY, "../assets/textures/SneakBody.png");
     m_context->m_assets->AddTexture(SNAKE_HEAD, "../assets/textures/SneakHead.png");
     m_context->m_assets->AddTexture(WALL, "../assets/textures/Wall2.png", true);
+    m_context->m_assets->AddSound(FOODSOUND, "../assets/music/FoodSound.ogg");
+    m_context->m_assets->AddSound(WALLSOUND, "../assets/music/WallSound.ogg");
+    m_context->m_assets->AddSound(GAMEOVER_SOUND, "../assets/music/GameOverSound.ogg");
+    m_context->m_assets->AddSound(SELECT_SOUND, "../assets/music/SelectSound.ogg");
 
     m_grass.setTexture(m_context->m_assets->GetTexture(GRASS));
     m_grass.setTextureRect(m_context->m_window->getViewport(m_context->m_window->getDefaultView()));
@@ -113,6 +119,9 @@ void GamePlay::Update(sf::Time deltaTime)
     {
         if(m_snake.IsOn(wall))
         {
+            m_context->m_assets->GetSound(FUNNY_MUSIC).pause();
+            m_context->m_assets->GetSound(WALLSOUND).play();
+            sf::sleep(sf::seconds(1.5f));
             m_context->m_states->Add(std::make_unique<GameOver>(m_context), true);
         }
     }
@@ -125,6 +134,7 @@ void GamePlay::Update(sf::Time deltaTime)
         {
             if (m_snake.IsOn(m_food[i]))  
             {
+                m_context->m_assets->GetSound(FOODSOUND).play();
                 do
                 {
                     m_food[i].setPosition(tilesize * (rand() % x_tileCount + 1), 
@@ -144,7 +154,7 @@ void GamePlay::Update(sf::Time deltaTime)
                     } 
                     while (m_snake.IsOnBody(newFood) || m_snake.IsOn(newFood));
     
-                    m_food.push_back(newFood); // Добавляем в список
+                    m_food.push_back(newFood);
                 }
 
     
@@ -152,17 +162,20 @@ void GamePlay::Update(sf::Time deltaTime)
                 m_score += 1;
                 m_scoreText.setString("Score: " + std::to_string(m_score));
     
-                break;  // Выходим, чтобы змея не ела сразу несколько предметов
+                break;
             }
         }
     
-        if (!foodEaten)  // Двигаем змею только если она НЕ съела еду
+        if (!foodEaten)
         {
             m_snake.Move(m_snakeDirection);
         }
     
         if(m_snake.IsOnBody(*(m_snake.getHead())))
         {
+            m_context->m_assets->GetSound(FUNNY_MUSIC).pause();
+            sf::sleep(sf::seconds(1.5f));
+            m_context->m_assets->GetSound(GAMEOVER_SOUND).play();
             m_context->m_states->Add(std::make_unique<GameOver>(m_context));
         }
     

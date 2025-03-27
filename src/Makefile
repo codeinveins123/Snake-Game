@@ -2,40 +2,33 @@
 CXX = g++
 WINDRES = windres
 
-# Пути к SFML
-SFML_INC = C:/SFML-2.6.2/include
-SFML_LIB = C:/SFML-2.6.2/lib
+# Пути к заголовочным файлам и библиотекам
+INCLUDES = -I"../include/" -I"C:/SFML-2.6.2/include"
+LIBS = -L"C:/SFML-2.6.2/lib" -lsfml-graphics-s -lsfml-window-s -lsfml-audio-s -lsfml-system-s \
+       -lfreetype -lgdi32 -lopengl32 -lwinmm -lopenal32 -lflac -lvorbisfile -lvorbis -lvorbisenc -logg -mwindows
 
 # Флаги компиляции
-CXXFLAGS = -I"$(SFML_INC)" -DSFML_STATIC -mwindows
-LDFLAGS = -L"$(SFML_LIB)" -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lfreetype -lgdi32 -lopengl32 -lwinmm
+CXXFLAGS = $(INCLUDES) -DSFML_STATIC
 
-# Исходники и объектные файлы
-SRC = main.cpp Game.cpp AssetManager.cpp StateManager.cpp MainMenu.cpp GamePlay.cpp Snake.cpp GameOver.cpp PauseGame.cpp
+# Исходные файлы
+SRC = $(wildcard *.cpp)
 OBJ = $(SRC:.cpp=.o)
 
-# Файлы ресурсов (иконка)
-RES = icon.rc
-RES_OBJ = icon.o
-
-# Итоговый файл
-TARGET = main.exe
-
-# Сборка всего
-all: $(TARGET)
+# Главная цель
+all: main.exe
 
 # Компиляция объектных файлов
 %.o: %.cpp
-	$(CXX) -c $< -o $@ $(CXXFLAGS)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Компиляция ресурсов
-$(RES_OBJ): $(RES)
-	$(WINDRES) -O coff $< -o $@
+# Компиляция ресурса (иконки)
+icon.o: icon.rc
+	$(WINDRES) $< -o $@
 
-# Линковка всего в main.exe
-$(TARGET): $(OBJ) $(RES_OBJ)
-	$(CXX) $(OBJ) $(RES_OBJ) -o $(TARGET) $(LDFLAGS)
+# Сборка итогового exe
+main.exe: $(OBJ) icon.o
+	$(CXX) $(OBJ) icon.o -o $@ $(LIBS)
 
-# Очистка объектных файлов
+# Очистка
 clean:
-	del /Q $(OBJ) $(RES_OBJ) $(TARGET)
+	del -f *.o main.exe icon.o

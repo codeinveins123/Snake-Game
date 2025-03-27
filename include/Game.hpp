@@ -15,7 +15,13 @@ enum AssetID
     SNAKE_HEAD,
     FOOD,
     FOOD2,
-    WALL
+    WALL,
+    FOODSOUND,
+    WALLSOUND,
+    FUNNY_MUSIC,
+    INTERESTING_MUSIC,
+    GAMEOVER_SOUND,
+    SELECT_SOUND
 };
 
 struct Context

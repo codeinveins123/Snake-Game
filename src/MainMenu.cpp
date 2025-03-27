@@ -40,7 +40,13 @@ void MainMenu::Init()
                           m_exitButton.getLocalBounds().height / 2);
     m_exitButton.setPosition(m_context->m_window->getSize().x / 2,
                             m_context->m_window->getSize().y / 2 + 25.f);
-    m_exitButton.setCharacterSize(20);                                                                                            
+    m_exitButton.setCharacterSize(20);          
+    
+    m_context->m_assets->AddSound(FUNNY_MUSIC, "../assets/music/FunnyMusic.ogg");
+    m_context->m_assets->AddSound(SELECT_SOUND, "../assets/music/SelectSound.ogg");
+    m_context->m_assets->GetSound(FUNNY_MUSIC).setVolume(80.f);
+    m_context->m_assets->GetSound(FUNNY_MUSIC).play();
+    m_context->m_assets->GetSound(FUNNY_MUSIC).setLoop(true);
 }
 
 void MainMenu::ProcessInput()
@@ -62,6 +68,7 @@ void MainMenu::ProcessInput()
                     {
                         m_isPlayButtonSelected = true;
                         m_isExitButtonSelected = false;
+                        m_context->m_assets->GetSound(SELECT_SOUND).play();
                     }
                     break;
                 }
@@ -72,11 +79,13 @@ void MainMenu::ProcessInput()
                     {
                         m_isPlayButtonSelected = false;
                         m_isExitButtonSelected = true;
+                        m_context->m_assets->GetSound(SELECT_SOUND).play();
                     }
                     break;
                 }
                 case sf::Keyboard::Return:
                 {
+                    m_context->m_assets->GetSound(SELECT_SOUND).play();
                     m_isPlayButtonPressed = false;
                     m_isExitButtonPressed = false;
 
